@@ -1,0 +1,7 @@
+{
+  "domain": "pcc",
+  "name": "Paulo's Custom Components",
+  "documentation": "https://github.com/pfandrade/ha-custom-components",
+  "requirements": [],
+  "codeowners": ["@pfandrade"]
+}
