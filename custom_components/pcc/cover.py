@@ -34,7 +34,11 @@ from homeassistant.helpers.reload import async_setup_reload_service
 from homeassistant.helpers.script import Script
 
 from homeassistant.components.template.const import CONF_AVAILABILITY_TEMPLATE, DOMAIN, PLATFORMS
-from homeassistant.components.template.template_entity import TemplateEntity
+from homeassistant.components.template.template_entity import (
+    TEMPLATE_ENTITY_COMMON_SCHEMA_LEGACY,
+    TemplateEntity,
+    rewrite_common_legacy_to_modern_conf,
+)
 from threading import Timer
 
 _LOGGER = logging.getLogger(__name__)
@@ -84,41 +88,22 @@ async def _async_create_entities(hass, config):
     """Create the Template cover."""
     covers = []
 
-    for device, device_config in config[CONF_COVERS].items():
-        state_template = device_config.get(CONF_VALUE_TEMPLATE)
-        icon_template = device_config.get(CONF_ICON_TEMPLATE)
-        availability_template = device_config.get(CONF_AVAILABILITY_TEMPLATE)
-        entity_picture_template = device_config.get(CONF_ENTITY_PICTURE_TEMPLATE)
+    for object_id, entity_config in config[CONF_COVERS].items():
+        entity_config = rewrite_common_legacy_to_modern_conf(entity_config)
 
-        friendly_name = device_config.get(CONF_FRIENDLY_NAME, device)
-        device_class = device_config.get(CONF_DEVICE_CLASS)
-        open_action = device_config.get(OPEN_ACTION)
-        close_action = device_config.get(CLOSE_ACTION)
-        stop_action = device_config.get(STOP_ACTION)
-        unique_id = device_config.get(CONF_UNIQUE_ID)
-        travel_time_down = device_config.get(CONF_TRAVELLING_TIME_DOWN)
-        travel_time_up = device_config.get(CONF_TRAVELLING_TIME_UP)
+        unique_id = entity_config.get(CONF_UNIQUE_ID)
 
         covers.append(
             PCCCover(
                 hass,
-                device,
-                friendly_name,
-                device_class,
-                state_template,
-                icon_template,
-                entity_picture_template,
-                availability_template,
-                open_action,
-                close_action,
-                stop_action,
-                travel_time_down,
-                travel_time_up,
+                object_id,
+                entity_config,
                 unique_id,
             )
         )
 
     return covers
+
 
 
 async def async_setup_platform(hass, config, async_add_entities, discovery_info=None):
@@ -134,33 +119,27 @@ class PCCCover(TemplateEntity, CoverEntity):
     def __init__(
         self,
         hass,
-        device_id,
-        friendly_name,
-        device_class,
-        state_template,
-        icon_template,
-        entity_picture_template,
-        availability_template,
-        open_action,
-        close_action,
-        stop_action,
-        travel_time_down,
-        travel_time_up,
+        object_id,
+        config,
         unique_id,
     ):
         """Initialize the Template cover."""
         super().__init__(
-            availability_template=availability_template,
-            icon_template=icon_template,
-            entity_picture_template=entity_picture_template,
+            hass, config=config, fallback_name=object_id, unique_id=unique_id
         )
         self.entity_id = async_generate_entity_id(
-            ENTITY_ID_FORMAT, device_id, hass=hass
+            ENTITY_ID_FORMAT, object_id, hass=hass
         )
+        friendly_name = config.get(CONF_FRIENDLY_NAME, object_id)
+        open_action = config.get(OPEN_ACTION)
+        close_action = config.get(CLOSE_ACTION)
+        stop_action = config.get(STOP_ACTION)
+
         self._name = friendly_name
-        self._template = state_template
-        self._device_class = device_class
+        self._template = config.get(CONF_VALUE_TEMPLATE)
+        self._device_class = config.get(CONF_DEVICE_CLASS)
         self._open_script = None
+
         domain = __name__.split(".")[-2]
         if open_action is not None:
             self._open_script = Script(hass, open_action, friendly_name, domain)
@@ -174,8 +153,8 @@ class PCCCover(TemplateEntity, CoverEntity):
         self._unique_id = unique_id
         self._opening_timer = None
         self._closing_timer = None
-        self._travel_time_down = travel_time_down
-        self._travel_time_up = travel_time_up
+        self._travel_time_down = config.get(CONF_TRAVELLING_TIME_DOWN)
+        self._travel_time_up = config.get(CONF_TRAVELLING_TIME_UP)
 
     async def async_added_to_hass(self):
         """Register callbacks."""
