@@ -198,7 +198,7 @@ class PCCCover(TemplateEntity, CoverEntity):
         self._resetOpeningTimer()
         def _timer_done():
             self._opening_timer = None
-            self.async_schedule_update_ha_state()
+            self.hass.loop.call_soon_threadsafe(self.async_schedule_update_ha_state)
         
         self._opening_timer = Timer(self._travel_time_up, _timer_done)
         self._opening_timer.start()
@@ -212,7 +212,7 @@ class PCCCover(TemplateEntity, CoverEntity):
         self._resetClosingTimer()
         def _timer_done():
             self._closing_timer = None
-            self.async_schedule_update_ha_state()
+            self.hass.loop.call_soon_threadsafe(self.async_schedule_update_ha_state)
         
         self._closing_timer = Timer(self._travel_time_down, _timer_done)
         self._closing_timer.start()
