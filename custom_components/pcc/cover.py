@@ -7,10 +7,8 @@ from homeassistant.components.cover import (
     DEVICE_CLASSES_SCHEMA,
     ENTITY_ID_FORMAT,
     PLATFORM_SCHEMA,
-    SUPPORT_CLOSE,
-    SUPPORT_OPEN,
-    SUPPORT_STOP,
     CoverEntity,
+    CoverEntityFeature,
 )
 from homeassistant.const import (
     CONF_DEVICE_CLASS,
@@ -89,7 +87,7 @@ async def _async_create_entities(hass, config):
     covers = []
 
     for object_id, entity_config in config[CONF_COVERS].items():
-        entity_config = rewrite_common_legacy_to_modern_conf(entity_config)
+        entity_config = rewrite_common_legacy_to_modern_conf(hass,entity_config)
 
         unique_id = entity_config.get(CONF_UNIQUE_ID)
 
@@ -259,10 +257,10 @@ class PCCCover(TemplateEntity, CoverEntity):
     @property
     def supported_features(self):
         """Flag supported features."""
-        supported_features = SUPPORT_OPEN | SUPPORT_CLOSE
+        supported_features = CoverEntityFeature.OPEN | CoverEntityFeature.CLOSE
 
         if self._stop_script is not None:
-            supported_features |= SUPPORT_STOP
+            supported_features |= CoverEntityFeature.STOP
 
         return supported_features
 
