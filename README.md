@@ -23,7 +23,7 @@ The **PCC Cover** integration lets you create a cover entity (e.g., garage door,
 
 ---
 
-## 🔧 Installation via HACS
+## Installation via HACS
 
 This integration can be installed and managed through [HACS](https://hacs.xyz/).
 
@@ -41,7 +41,7 @@ This integration can be installed and managed through [HACS](https://hacs.xyz/).
 
 ---
 
-## ⚙️ Setup
+## Setup
 
 1. Go to **Settings → Devices & Services → Add Integration → PCC**.
 2. Fill in the details:
@@ -56,7 +56,7 @@ This integration can be installed and managed through [HACS](https://hacs.xyz/).
 
 ---
 
-## ✨ Changes from the original
+## Changes from the original
 
 * **Config Flow Support**
 
@@ -95,14 +95,14 @@ This integration can be installed and managed through [HACS](https://hacs.xyz/).
 
 ---
 
-## 💡 Notes
+## Notes
 
 * The underlying logic (scripts, travel time simulation, template state handling) is unchanged from the original PCC cover component.
 * This rewrite is focused on keeping the integration **working and maintainable** for current and future Home Assistant versions.
 
 ---
 
-## 🤝 Contributing
+## Contributing
 
 While this update was made for my own purposes, **pull requests are welcome**.
 If you find bugs, have suggestions, or want to extend functionality — feel free to open an issue or submit a PR.
