@@ -1,4 +1,4 @@
-# PCC – Config Entry Rewrite (Vibe-Coded)
+# PCC Cover: Template-Based Cover Integration for Home Assistant 
 
 This is a **vibe-coded rewrite** of the original [*Paulo's Custom Components* (PCC) cover integration](https://github.com/pfandrade/ha-custom-components) for Home Assistant by Paulo Andrade.
 
