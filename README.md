@@ -4,6 +4,58 @@ This is a **vibe-coded rewrite** of the original [*Paulo's Custom Components* (P
 
 The goal of this rewrite was to update PCC to work with **Home Assistant 2025+** while modernizing the integration for my own setup.
 
+---
+
+## Table of Contents
+
+* [What this component does](#what-this-component-does)
+* [Installation via HACS](#installation-via-hacs)
+* [Setup](#setup)
+* [Changes from the original](#changes-from-the-original)
+* [Notes](#notes)
+* [Contributing](#contributing)
+
+---
+
+## What this component does
+
+The **PCC Cover** integration lets you create a cover entity (e.g., garage door, gate, shutter) whose **open/close/stop actions** are defined by your own Home Assistant service calls (like switching a relay), while the **state** (open vs. closed) is determined by a **Jinja value template** you provide (for example, a binary sensor). The integration also simulates **opening/closing** for a configurable time window so the UI shows motion while your hardware is actuating. In short, it gives you a simple but powerful way to turn existing devices (smart or dumb) into a first-class **`cover`** in Home Assistant — entirely from the UI, no YAML required.
+
+---
+
+## 🔧 Installation via HACS
+
+This integration can be installed and managed through [HACS](https://hacs.xyz/).
+
+1. In Home Assistant, go to **HACS → Integrations → 3-dot menu → Custom repositories**.
+2. Add this repository URL:
+
+   ```
+   https://github.com/Caine72/pcc-cover
+   ```
+
+   Category: **Integration**.
+3. Click **ADD** and close the dialog.
+4. Search for **PCC Cover** in HACS Integrations and click **Download**.
+5. Restart Home Assistant.
+
+---
+
+## ⚙️ Setup
+
+1. Go to **Settings → Devices & Services → Add Integration → PCC**.
+2. Fill in the details:
+
+   * **Unique ID** (must be unique across HA)
+   * **Friendly Name**
+   * **Device Class** (optional)
+   * **Value Template** (Jinja string)
+   * **Open/Close/Stop actions**
+   * **Travel times** (optional)
+3. Click **Submit**. Your entity will be created and ready to use.
+
+---
+
 ## ✨ Changes from the original
 
 * **Config Flow Support**
@@ -40,39 +92,6 @@ The goal of this rewrite was to update PCC to work with **Home Assistant 2025+**
 
   * This integration no longer loads via `cover: - platform: pcc`.
   * All setup is done via config entries.
-
----
-
-## 🔧 Installation via HACS
-
-This integration can be installed and managed through [HACS](https://hacs.xyz/).
-
-1. In Home Assistant, go to **HACS → Integrations → 3-dot menu → Custom repositories**.
-2. Add this repository URL:
-
-   ```
-   https://github.com/Caine72/ha-custom-components
-   ```
-
-   Category: **Integration**.
-3. Click **ADD** and close the dialog.
-4. Search for **PCC Cover** in HACS Integrations and click **Download**.
-5. Restart Home Assistant.
-
----
-
-## ⚙️ Setup
-
-1. Go to **Settings → Devices & Services → Add Integration → PCC**.
-2. Fill in the details:
-
-   * **Unique ID** (must be unique across HA)
-   * **Friendly Name**
-   * **Device Class** (optional)
-   * **Value Template** (Jinja string)
-   * **Open/Close/Stop actions**
-   * **Travel times** (optional)
-3. Click **Submit**. Your entity will be created and ready to use.
 
 ---
 
