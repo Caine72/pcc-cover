@@ -1,0 +1,7 @@
+{
+  "name": "PCC Cover",
+  "render_readme": true,
+  "domains": ["pcc"],
+  "country": "ALL",
+  "homeassistant": "2025.1.0"
+}
