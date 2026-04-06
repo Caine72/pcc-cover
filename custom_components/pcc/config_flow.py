@@ -95,9 +95,6 @@ class PCCConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 class PCCOptionsFlow(config_entries.OptionsFlow):
     """Options flow for post-setup configuration (does not allow changing unique_id)."""
 
-    def __init__(self, config_entry: config_entries.ConfigEntry):
-        _LOGGER.debug("PCC: OptionsFlow __init__ entry_id=%s", config_entry.entry_id)
-
     async def async_step_init(self, user_input=None):
         if user_input is not None:
             _LOGGER.debug("PCC: options saved entry_id=%s", self.config_entry.entry_id)
@@ -106,11 +103,16 @@ class PCCOptionsFlow(config_entries.OptionsFlow):
         defaults = {**self.config_entry.data, **self.config_entry.options}
         _LOGGER.debug("PCC: options form opened entry_id=%s", self.config_entry.entry_id)
 
-        schema = _schema({
-            **defaults,
-            # Use entry.title as a sensible fallback for friendly name
-            CONF_FRIENDLY_NAME: defaults.get(CONF_FRIENDLY_NAME, self.config_entry.title),
-        }, include_unique=False)
+        schema = _schema(
+            {
+                **defaults,
+                CONF_FRIENDLY_NAME: defaults.get(CONF_FRIENDLY_NAME, self.config_entry.title),
+            },
+            include_unique=False,
+        )
 
-        _LOGGER.debug("PCC: showing options form (exclude unique_id) entry_id=%s", self.config_entry.entry_id)
+        _LOGGER.debug(
+            "PCC: showing options form (exclude unique_id) entry_id=%s",
+            self.config_entry.entry_id,
+        )
         return self.async_show_form(step_id="init", data_schema=schema)
