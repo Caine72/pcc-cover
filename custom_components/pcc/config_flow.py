@@ -89,14 +89,13 @@ class PCCConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     def async_get_options_flow(config_entry):
         """Expose the OptionsFlow so 'Configure' appears on the integration card."""
         _LOGGER.debug("PCC: async_get_options_flow for entry_id=%s", getattr(config_entry, "entry_id", "?"))
-        return PCCOptionsFlow(config_entry)
+        return PCCOptionsFlow()
 
 
 class PCCOptionsFlow(config_entries.OptionsFlow):
     """Options flow for post-setup configuration (does not allow changing unique_id)."""
 
     def __init__(self, config_entry: config_entries.ConfigEntry):
-        self.config_entry = config_entry
         _LOGGER.debug("PCC: OptionsFlow __init__ entry_id=%s", config_entry.entry_id)
 
     async def async_step_init(self, user_input=None):
