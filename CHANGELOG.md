@@ -1,4 +1,16 @@
 # Changelog
+
+## [2.1.3] - 2026-04-06
+### Fixed
+- Fixed crash when opening Configure (options flow) from the integration card on Home Assistant 2026.x.
+- Resolved AttributeError: property 'config_entry' has no setter caused by outdated OptionsFlow initialization.
+
+### Changed
+- Updated Options Flow implementation to follow current Home Assistant guidelines:
+  - Removed passing config_entry to PCCOptionsFlow constructor.
+  - Now relies on self.config_entry provided by Home Assistant.
+- Aligned integration with post-2025.12 Home Assistant API changes for config entries and options flows.
+
 ## [2.1.1] - 2025-08-26
 ### Fixed
 - Existing PCC entries can now be reconfigured from the integration card (Configure opens the options form).
