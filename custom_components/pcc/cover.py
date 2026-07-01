@@ -22,17 +22,19 @@ from homeassistant.helpers.entity import async_generate_entity_id
 from homeassistant.helpers.script import Script
 from homeassistant.helpers.template import Template as HATemplate
 from homeassistant.components.template.template_entity import TemplateEntity
-from . import DOMAIN
+
+from .const import (
+    CONF_CLOSE_COVER,
+    CONF_OPEN_COVER,
+    CONF_STOP_COVER,
+    CONF_TRAVEL_DOWN,
+    CONF_TRAVEL_UP,
+    DOMAIN,
+)
 
 _LOGGER = logging.getLogger(__name__)
+
 _VALID_STATES = [STATE_ON, STATE_OFF, "true", "false"]
-
-CONF_OPEN_COVER = "open_cover"
-CONF_CLOSE_COVER = "close_cover"
-CONF_STOP_COVER = "stop_cover"
-CONF_TRAVEL_UP = "travelling_time_up"
-CONF_TRAVEL_DOWN = "travelling_time_down"
-
 
 def _merged(entry):
     """Options override data; fall back to data."""
