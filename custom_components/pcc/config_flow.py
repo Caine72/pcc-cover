@@ -14,21 +14,18 @@ from homeassistant.const import (
 from homeassistant.core import callback
 from homeassistant.helpers import selector as sel
 
-from . import DOMAIN
+from .const import (
+    CONF_CLOSE_COVER,
+    CONF_OPEN_COVER,
+    CONF_STOP_COVER,
+    CONF_TRAVEL_DOWN,
+    CONF_TRAVEL_UP,
+    DEFAULT_TRAVEL_TIME,
+    DEVICE_CLASSES,
+    DOMAIN,
+)
 
 _LOGGER = logging.getLogger(__name__)
-
-CONF_OPEN_COVER = "open_cover"
-CONF_CLOSE_COVER = "close_cover"
-CONF_STOP_COVER = "stop_cover"
-CONF_TRAVEL_UP = "travelling_time_up"
-CONF_TRAVEL_DOWN = "travelling_time_down"
-
-DEFAULT_TRAVEL_TIME = 25
-DEVICE_CLASSES = [
-    "awning", "blind", "curtain", "damper", "door", "garage", "gate",
-    "shade", "shutter", "window",
-]
 
 
 def _schema(defaults: dict[str, Any] | None = None, include_unique: bool = True) -> vol.Schema:
