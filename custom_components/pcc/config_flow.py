@@ -63,15 +63,30 @@ class PCCConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         errors: dict[str, str] = {}
 
         if user_input is not None:
-            existing_ids = [e.unique_id for e in self._async_current_entries()]
-            if user_input[CONF_UNIQUE_ID] in existing_ids:
+            unique_id = user_input[CONF_UNIQUE_ID].strip()
+
+            legacy_duplicate = any(
+                entry.data.get(CONF_UNIQUE_ID) == unique_id
+                for entry in self._async_current_entries()
+            )
+
+            if legacy_duplicate:
                 errors[CONF_UNIQUE_ID] = "duplicate_unique_id"
-                _LOGGER.debug("PCC: duplicate unique_id: %s", user_input[CONF_UNIQUE_ID])
+                _LOGGER.debug("PCC: duplicate legacy unique_id: %s", unique_id)
+            else:
+                await self.async_set_unique_id(unique_id)
+                self._abort_if_unique_id_configured()
+
+                user_input = {
+                    **user_input,
+                    CONF_UNIQUE_ID: unique_id,
+                }
 
             if not errors:
                 _LOGGER.debug(
                     "PCC: creating entry title=%r unique_id=%r",
-                    user_input.get(CONF_FRIENDLY_NAME), user_input.get(CONF_UNIQUE_ID)
+                    user_input.get(CONF_FRIENDLY_NAME),
+                    user_input.get(CONF_UNIQUE_ID)
                 )
                 return self.async_create_entry(
                     title=user_input[CONF_FRIENDLY_NAME],
