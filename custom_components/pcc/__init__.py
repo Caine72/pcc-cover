@@ -1,14 +1,19 @@
 from __future__ import annotations
+
 import logging
+
 from homeassistant.config_entries import ConfigEntry
-from homeassistant.core import HomeAssistant
 from homeassistant.const import Platform
+from homeassistant.core import HomeAssistant
 from homeassistant.helpers import config_validation as cv
 
 _LOGGER = logging.getLogger(__name__)
 
 DOMAIN = "pcc"
 PLATFORMS: list[Platform] = [Platform.COVER]
+
+CONFIG_SCHEMA = cv.config_entry_only_config_schema(DOMAIN)
+
 
 async def async_setup(hass: HomeAssistant, config: dict) -> bool:
     """Set up PCC Cover."""
