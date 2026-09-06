@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+SCRIPT_DIR="$(cd -- "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(cd -- "${SCRIPT_DIR}/.." && pwd)"
+ENV_FILE="${REAL_HA_ENV_FILE:-${REPO_ROOT}/.real_ha_acceptance.env}"
+
+if [[ -f "${ENV_FILE}" ]]; then
+  set -a
+  # shellcheck source=/dev/null
+  source "${ENV_FILE}"
+  set +a
+fi
+
+if [[ "${1:-}" == "-h" || "${1:-}" == "--help" ]]; then
+  exec python3 "${REPO_ROOT}/scripts/real_ha_acceptance.py" --help
+fi
+
+HA_URL="${HA_URL:-https://localhost:8123}"
+
+if [[ -z "${HA_TOKEN:-}" ]]; then
+  printf 'HA_TOKEN is required in %s or the environment.\n' "${ENV_FILE}" >&2
+  exit 2
+fi
+
+if [[ -z "${PCC_ENTITY_ID:-}" ]]; then
+  printf 'PCC_ENTITY_ID is required in %s or the environment.\n' "${ENV_FILE}" >&2
+  exit 2
+fi
+
+exec python3 "${REPO_ROOT}/scripts/real_ha_acceptance.py" \
+  --ha-url "${HA_URL}" \
+  --token "${HA_TOKEN}" \
+  --entity-id "${PCC_ENTITY_ID}" \
+  "$@"

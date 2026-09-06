@@ -1,0 +1,60 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Create a PCC cover",
+        "description": "Create one template-based cover. The template must return on/off or true/false.",
+        "data": {
+          "friendly_name": "Name",
+          "device_class": "Device class",
+          "value_template": "State template",
+          "open_cover": "Open action",
+          "close_cover": "Close action",
+          "stop_cover": "Stop action",
+          "travelling_time_up": "Opening travel time",
+          "travelling_time_down": "Closing travel time",
+          "unique_id": "Unique ID"
+        },
+        "data_description": {
+          "value_template": "Template that returns true/on when open and false/off when closed.",
+          "travelling_time_up": "Seconds to show the cover as opening.",
+          "travelling_time_down": "Seconds to show the cover as closing."
+        }
+      }
+    },
+    "error": {
+      "duplicate_unique_id": "This unique ID is already in use.",
+      "invalid_template": "The template is invalid.",
+      "required": "This field is required."
+    },
+    "abort": {
+      "already_configured": "A cover with this unique ID is already configured."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Configure PCC cover",
+        "data": {
+          "friendly_name": "Name",
+          "device_class": "Device class",
+          "value_template": "State template",
+          "open_cover": "Open action",
+          "close_cover": "Close action",
+          "stop_cover": "Stop action",
+          "travelling_time_up": "Opening travel time",
+          "travelling_time_down": "Closing travel time"
+        },
+        "data_description": {
+          "value_template": "Template that returns true/on when open and false/off when closed.",
+          "travelling_time_up": "Seconds to show the cover as opening.",
+          "travelling_time_down": "Seconds to show the cover as closing."
+        }
+      }
+    },
+    "error": {
+      "invalid_template": "The template is invalid.",
+      "required": "This field is required."
+    }
+  }
+}

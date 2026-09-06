@@ -1,0 +1,11 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.vscode/
+.env
+
+.real_ha_acceptance.env
+docs/REAL_HA_ACCEPTANCE_REPORT.md
