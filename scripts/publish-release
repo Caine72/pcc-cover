@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+if [[ "$#" -ne 1 ]]; then
+  printf 'Usage: %s PATH_TO_APPROVED_NOTES\n' "$0" >&2
+  exit 2
+fi
+
+NOTES_FILE="$1"
+if [[ ! -f "${NOTES_FILE}" || ! -s "${NOTES_FILE}" ]]; then
+  printf 'Release notes file must exist and not be empty: %s\n' "${NOTES_FILE}" >&2
+  exit 2
+fi
+
+REPO_ROOT="$(git rev-parse --show-toplevel)"
+cd "${REPO_ROOT}"
+./scripts/check-release
+
+VERSION="$(${PYTHON:-python3} - <<'PY'
+import json
+from pathlib import Path
+
+manifest = json.loads(Path("custom_components/pcc/manifest.json").read_text())
+print(manifest["version"])
+PY
+)"
+TAG="v${VERSION}"
+TARGET="$(git rev-parse HEAD)"
+REPOSITORY="$(gh repo view --json nameWithOwner --jq .nameWithOwner)"
+
+gh release create "${TAG}" --repo "${REPOSITORY}" --target "${TARGET}" \
+  --title "${TAG}" --notes-file "${NOTES_FILE}"
+
+URL="$(gh release view "${TAG}" --repo "${REPOSITORY}" --json url --jq .url)"
+printf 'RELEASE PUBLISHED: %s\n' "${URL}"

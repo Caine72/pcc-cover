@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+REPO_ROOT="$(git rev-parse --show-toplevel)"
+cd "${REPO_ROOT}"
+
+if [[ -x .venv/bin/pytest ]]; then
+  exec .venv/bin/pytest -q "$@"
+fi
+
+exec pytest -q "$@"
