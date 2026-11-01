@@ -8,7 +8,7 @@ Home Assistant **2025.12 or newer** is required.
 
 > [!IMPORTANT]
 > This integration is maintained for a private Home Assistant setup and
-> published primarily for HACS installation. Bug reports are welcome, but there
+> published primarily through the Home Assistant Marketplace. Bug reports are welcome, but there
 > is no support or broad compatibility promise.
 
 Development is AI-assisted.
@@ -17,21 +17,27 @@ Development is AI-assisted.
 
 The **PCC Cover** integration lets you create a cover entity (e.g., garage door, gate, shutter) whose **open/close/stop actions** are defined by your own Home Assistant service calls (like switching a relay), while the **state** (open vs. closed) is determined by a **Jinja value template** you provide (for example, a binary sensor). The integration also simulates **opening/closing** for a configurable time window so the UI shows motion while your hardware is actuating. In short, it gives you a simple but powerful way to turn existing devices (smart or dumb) into a first-class **`cover`** in Home Assistant — entirely from the UI, no YAML required.
 
-## Installation via HACS
+## Installation
 
-This integration can be installed and managed through [HACS](https://hacs.xyz/).
+On Home Assistant 2026.11 or newer, install PCC Cover through the built-in
+**Marketplace**:
 
-1. In Home Assistant, go to **HACS → Integrations → 3-dot menu → Custom repositories**.
-2. Add this repository URL:
+1. Go to **Settings → Marketplace**.
+2. Open the three-dot menu, choose **Custom repositories**, and add:
 
    ```
    https://github.com/Caine72/pcc-cover
    ```
 
    Category: **Integration**.
-3. Click **ADD** and close the dialog.
-4. Search for **PCC Cover** in HACS Integrations and click **Download**.
-5. Restart Home Assistant.
+3. Search for **PCC Cover** and click **Download**.
+
+Existing HACS installations migrate to Marketplace automatically when Home
+Assistant is upgraded to 2026.11.
+
+For Home Assistant versions before 2026.11, use **HACS → Integrations →
+three-dot menu → Custom repositories** instead, then add the same repository
+as an **Integration**.
 
 ## Setup
 
