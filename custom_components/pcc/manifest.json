@@ -4,6 +4,9 @@
   "after_dependencies": [
     "template"
   ],
+  "categories": [
+    "helpers"
+  ],
   "codeowners": [
     "@Caine72"
   ],
@@ -12,5 +15,5 @@
   "iot_class": "local_push",
   "issue_tracker": "https://github.com/Caine72/pcc-cover/issues",
   "requirements": [],
-  "version": "2.1.4"
+  "version": "2.1.5"
 }
