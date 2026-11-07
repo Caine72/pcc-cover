@@ -3,7 +3,7 @@
 import pytest
 from homeassistant.const import CONF_FRIENDLY_NAME, CONF_UNIQUE_ID, CONF_VALUE_TEMPLATE
 from homeassistant.core import HomeAssistant
-from pytest_homeassistant_custom_component.common import MockConfigEntry
+from pytest_homeassistant.common import MockConfigEntry
 
 from custom_components.pcc.const import (
     CONF_CLOSE_COVER,
@@ -13,11 +13,6 @@ from custom_components.pcc.const import (
     CONF_TRAVEL_UP,
     DOMAIN,
 )
-
-
-@pytest.fixture(autouse=True)
-def auto_enable_custom_integrations(enable_custom_integrations: None) -> None:
-    """Enable custom integrations in every test."""
 
 
 @pytest.fixture
